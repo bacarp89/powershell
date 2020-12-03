@@ -1,6 +1,15 @@
-Import-Module ADSync
-$scheduler=Get-ADsyncscheduler
-If ( $scheduler.synccycleinprogress -eq $false)
+try
+	{
+		import-module ADSync
+	}
+catch
+	{
+		install-module ADSync
+	}
+if (!$error)
+	{
+		$scheduler=Get-ADsyncscheduler
+		If ( $scheduler.synccycleinprogress -eq $false)
 	{
 		Start-ADSyncSyncCycle -PolicyType Delta
 	}
